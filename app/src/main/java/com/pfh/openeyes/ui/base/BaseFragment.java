@@ -1,12 +1,13 @@
 package com.pfh.openeyes.ui.base;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.Toast;
 
-import com.pfh.openeyes.presenter.BasePresenter;
+import com.pfh.openeyes.network.ApiStores;
+import com.pfh.openeyes.network.NetWorkClient;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
@@ -14,36 +15,22 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by Administrator on 2016/9/1.
  */
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
+public class BaseFragment extends Fragment {
 
-    private Context mContext;
-    protected P mPresenter;
-    private CompositeSubscription mCompositeSubscription;
+    public Context mContext;
+    protected CompositeSubscription mCompositeSubscription;
+    protected ApiStores apiStores;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        apiStores = NetWorkClient.getInstance().retrofit().create(ApiStores.class);
+        mContext = getActivity();
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter = createPresenter();
-        mContext = getActivity();
-    }
-
-//    public Toolbar initToolBar(View view, String title) {
-//        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-//        TextView toolbar_title = (TextView) toolbar.findViewById(R.id.toolbar_title);
-//        toolbar_title.setText(title);
-//        return toolbar;
-//    }
-
-
-    protected abstract P createPresenter();
-
-    public void toastShow(int resId) {
-        Toast.makeText(mContext, resId, Toast.LENGTH_SHORT).show();
-    }
-
-    public void toastShow(String resId) {
-        Toast.makeText(mContext, resId, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -51,9 +38,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         onUnsubscribe();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
+//
     }
 
 

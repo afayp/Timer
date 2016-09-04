@@ -1,0 +1,205 @@
+package com.pfh.openeyes.ui.fragment;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.pfh.openeyes.R;
+import com.pfh.openeyes.event.ChangeDateEvent;
+import com.pfh.openeyes.model.Data;
+import com.pfh.openeyes.model.Feed;
+import com.pfh.openeyes.model.FeedItem;
+import com.pfh.openeyes.model.IssueList;
+import com.pfh.openeyes.ui.activity.FeedDetailActivity;
+import com.pfh.openeyes.ui.adapter.FeedAdapter;
+import com.pfh.openeyes.ui.base.BaseFragment;
+import com.pfh.openeyes.util.LogUtil;
+import com.pfh.openeyes.util.TimeUtils;
+import com.pfh.openeyes.widget.CustomRecyclerview;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+/**
+ * Created by Administrator on 2016/9/3.
+ */
+public class FeedFragment extends BaseFragment {
+
+    @BindView(R.id.recyclerview)
+    CustomRecyclerview recyclerView;
+
+    private FeedAdapter feedAdapter;
+    private List<FeedItem> AllFeedItemList;//所有的feedItem
+
+    private Map<String,Feed> feedMap;//保存每天对应的货
+
+    private String nextPageUrl;
+    private int count = 0;//一共有几天的货
+    private LinearLayoutManager layoutManager;
+    private boolean isLoadingMore;
+//    private long currentDate;
+
+    public static FeedFragment newInstance() {
+
+        Bundle args = new Bundle();
+        FeedFragment fragment = new FeedFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_feed, container, false);
+        ButterKnife.bind(this,view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        feedMap = new HashMap<>();
+        AllFeedItemList = new ArrayList<>();
+        feedAdapter = new FeedAdapter(AllFeedItemList, getActivity());
+        layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(feedAdapter);
+        feedAdapter.setOnItemClickListener(new FeedAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(View view, FeedItem feedItem,int position) {
+                if (feedItem.getData().getDataType().equals("Banner")){
+                    //gotoWebView();
+                }else if (feedItem.getData().getDataType().equals("VideoBeanForClient")){
+                    Intent intent = new Intent(getActivity(), FeedDetailActivity.class);
+                    //传的数据
+                    startActivity(intent);
+                }
+            }
+        });
+
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+//                LogUtil.e("firstVisibleItemPosition: "+firstVisibleItemPosition);
+                Data data = AllFeedItemList.get(firstVisibleItemPosition).getData();
+                if (data.getDataType().equals("TextHeader")){
+                    String date = TimeUtils.convertDate(AllFeedItemList.get(firstVisibleItemPosition +1).getData().getDate());
+                    changeToolbarDate(date);
+                }
+                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                int itemCount = layoutManager.getItemCount();
+
+                if (itemCount - lastVisibleItemPosition < 3 && dy >0){
+                    if (isLoadingMore){
+                        //正在加载
+                    }else {
+                        isLoadingMore = true;
+                        loadMore();
+                    }
+                }
+
+            }
+        });
+
+        loadFirst();
+
+    }
+
+    public void loadMore(){
+        apiStores.loadFeedNextPage(getDate(),"1")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Feed>() {
+                    @Override
+                    public void onCompleted() {
+                        isLoadingMore = false;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+//                        isLoadingMore = false;
+                        LogUtil.e("error: "+e.getMessage());
+
+                    }
+
+                    @Override
+                    public void onNext(Feed feed) {
+                        handleFeed(feed);
+                    }
+                });
+
+
+    }
+
+
+    public void loadFirst(){
+        //默认每次加载1页，1个为Banner或者TextHeader,其余为视频
+        apiStores.loadFeedFirst("1")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Feed>() {
+                    @Override
+                    public void onCompleted() {
+                        isLoadingMore = false;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        isLoadingMore = false;
+                        LogUtil.e("error: "+e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Feed feed) {
+//                        currentDate = feed.getIssueList().get(0).getDate();
+                        handleFeed(feed);
+                    }
+                });
+    }
+
+    private void changeToolbarDate(String date) {
+        EventBus.getDefault().post(new ChangeDateEvent(date));
+    }
+
+    private void handleFeed(Feed feed){
+        IssueList issueList = feed.getIssueList().get(0);
+        feedMap.put(issueList.getDate()+"",feed);
+        nextPageUrl = feed.getNextPageUrl();
+        count++;
+        AllFeedItemList.addAll(issueList.getItemList());//因为num为1，所以这里只有一个ItemList
+        feedAdapter.refreshData(AllFeedItemList);
+    }
+
+    private String getDate(){
+        // http://baobab.wandoujia.com/api/v2/feed?date=1472918400000&num=1
+        int index1 = nextPageUrl.indexOf("date");
+        int index2 = nextPageUrl.indexOf("&",index1);
+        String date = nextPageUrl.substring(index1 + 5, index2);
+        return date;
+    }
+}
+
+
