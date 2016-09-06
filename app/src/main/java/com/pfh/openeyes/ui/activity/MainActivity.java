@@ -13,7 +13,7 @@ import com.pfh.openeyes.ui.fragment.DiscoveryFragment;
 import com.pfh.openeyes.ui.fragment.FeedFragment;
 import com.pfh.openeyes.ui.fragment.UserFragment;
 import com.pfh.openeyes.widget.CustomToolbar;
-import com.pfh.openeyes.widget.ViewPagerIndicator;
+import com.pfh.openeyes.widget.MainActivityIndicator;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     CustomToolbar mToolbar;
     @BindView(R.id.indicator)
-    ViewPagerIndicator mIndicator;
+    MainActivityIndicator mIndicator;
 
     // toolba对应四个Fragment
     public static final int TOOLBAR_FEED = 0;

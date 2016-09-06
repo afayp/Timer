@@ -1,9 +1,13 @@
 package com.pfh.openeyes.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/9/3.
  */
-public class Provider {
+public class Provider implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name;
 
     private String alias;

@@ -1,9 +1,14 @@
 package com.pfh.openeyes.model;
 
+import java.io.Serializable;
+
 /**
  * 可能为null： adTrack
  */
-public class Tags {
+public class Tags implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
     private int id;
 
     private String name;

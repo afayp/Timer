@@ -13,22 +13,22 @@ import com.pfh.openeyes.R;
 /**
  * Created by Administrator on 2016/9/3.
  */
-public class ViewPagerIndicator extends LinearLayout{
+public class MainActivityIndicator extends LinearLayout{
 
     private ImageView tab_1_solid;
     private ImageView tab_2_solid;
     private ImageView tab_3_solid;
     private ImageView tab_4_solid;
 
-    public ViewPagerIndicator(Context context) {
+    public MainActivityIndicator(Context context) {
         this(context,null);
     }
 
-    public ViewPagerIndicator(Context context, AttributeSet attrs) {
+    public MainActivityIndicator(Context context, AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public ViewPagerIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MainActivityIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         initView(context);

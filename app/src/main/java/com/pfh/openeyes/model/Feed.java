@@ -1,12 +1,15 @@
 package com.pfh.openeyes.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 精选 http://baobab.wandoujia.com/api/v2/feed?num=1返回数据
  * 可能为null字段：dialog
  */
-public class Feed {
+public class Feed implements Serializable{
+    private static final long serialVersionUID = 1L;
+
 
     private List<IssueList> issueList ;
 

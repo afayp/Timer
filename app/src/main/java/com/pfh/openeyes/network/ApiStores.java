@@ -16,7 +16,7 @@ public interface ApiStores {
 
     //精选,第一次加载
     @GET("api/v2/feed")
-    Observable<Feed> loadFeedFirst(@Query("num") String num);
+    Observable<Feed> loadFeedFirst(@Query("num") String num);// http://baobab.wandoujia.com/api/v2/feed?num=1
 
     //精选,加载下一页
     @GET("api/v2/feed")

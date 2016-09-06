@@ -89,7 +89,6 @@ public class NetWorkClient {
         if (cacheFile != null){
             Cache cache = new Cache(cacheFile,1024*1024*50);
             builder.cache(cache).addInterceptor(cacheInterceptor);
-        }else {
         }
 
 //        // Log信息拦截器

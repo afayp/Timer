@@ -1,11 +1,13 @@
 package com.pfh.openeyes.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/3.
  */
-public class IssueList {
+public class IssueList implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     private long releaseTime;
 

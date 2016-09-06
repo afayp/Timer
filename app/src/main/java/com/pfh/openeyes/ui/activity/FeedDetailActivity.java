@@ -1,13 +1,19 @@
 package com.pfh.openeyes.ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pfh.openeyes.R;
+import com.pfh.openeyes.model.Feed;
 import com.pfh.openeyes.ui.base.BaseActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -45,6 +51,14 @@ public class FeedDetailActivity extends BaseActivity {
     @BindView(R.id.iv_download)
     ImageView iv_download;
 
+    public static final String FEED_MAP = "feed_map";
+    public static final String GROUP_SIZE = "group_size";
+    public static final String GROUP_INDEX = "group_index";
+    private int currentGroupSize;
+    private int indexInGroup;
+    private HashMap<Integer, Feed> feedMap;
+    private List<Fragment> fragmentList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +69,19 @@ public class FeedDetailActivity extends BaseActivity {
 
     private void initData() {
 
+        currentGroupSize = getIntent().getIntExtra(GROUP_SIZE, 4);
+        indexInGroup = getIntent().getIntExtra(GROUP_INDEX, 0);
+        feedMap = (HashMap<Integer, Feed>) getIntent().getSerializableExtra(FEED_MAP);
+        fragmentList = new ArrayList<>();
+
+
     }
 
     private void initViewPager() {
+        for (int i = 0; i < currentGroupSize; i++) {
+
+//            fragmentList.add(FeedDetailFragment.newInstance());
+        }
 
     }
 }

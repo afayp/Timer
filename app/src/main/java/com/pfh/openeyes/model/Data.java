@@ -1,5 +1,6 @@
 package com.pfh.openeyes.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,9 @@ import java.util.List;
  *                  webAdTrack、promotion、label
  * y一共有三种dataType
  */
-public class Data {
+public class Data implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private String dataType;
 
     private int id;

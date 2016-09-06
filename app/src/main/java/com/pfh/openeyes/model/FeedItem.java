@@ -1,9 +1,12 @@
 package com.pfh.openeyes.model;
 
+import java.io.Serializable;
+
 /**
  * 精选 http://baobab.wandoujia.com/api/v2/feed?num=1，itemList字段下的JSONObject
  */
-public class FeedItem {
+public class FeedItem implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     private String type;
 

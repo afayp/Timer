@@ -16,14 +16,14 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/rectangle_hollow" />
+            android:src="@mipmap/ic_tab_strip_icon_feed" />
 
         <ImageView
             android:id="@+id/tab_1_solid"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/rectangle_solid" />
+            android:src="@mipmap/ic_tab_strip_icon_feed_selected" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,14 +44,14 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/rectangle_hollow" />
+            android:src="@mipmap/ic_tab_strip_icon_category" />
 
         <ImageView
             android:id="@+id/tab_2_solid"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/rectangle_solid" />
+            android:src="@mipmap/ic_tab_strip_icon_category_selected" />
 
 
         <TextView
@@ -73,14 +73,14 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/rectangle_hollow" />
+            android:src="@mipmap/ic_tab_strip_icon_pgc" />
 
         <ImageView
             android:id="@+id/tab_3_solid"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/rectangle_solid" />
+            android:src="@mipmap/ic_tab_strip_icon_pgc_selected" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,14 +101,14 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/rectangle_hollow" />
+            android:src="@mipmap/ic_tab_strip_icon_profile" />
 
         <ImageView
             android:id="@+id/tab_4_solid"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/rectangle_solid" />
+            android:src="@mipmap/ic_tab_strip_icon_profile_selected" />
 
         <TextView
             android:layout_width="wrap_content"
