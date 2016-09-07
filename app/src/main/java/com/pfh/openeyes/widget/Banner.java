@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,19 +55,22 @@ public class Banner extends RelativeLayout {
      *
      */
     private void initView() {
-
-        //底部的小圆点指示器的容器
-        pointContainer = new LinearLayout(mContext);
-        pointContainer.setOrientation(LinearLayout.HORIZONTAL);
-        pointContainer.setPadding(10,10,10,10);
-        LayoutParams lp_indicator = new LayoutParams(RWC, RWC);
-        lp_indicator.addRule(ALIGN_PARENT_BOTTOM);
-        addView(pointContainer,lp_indicator);
-
         //viewpger
         mViewPager = new ViewPager(mContext);
         LayoutParams lp_viewpager = new LayoutParams(RMP, RMP);
         addView(mViewPager,lp_viewpager);
+
+        //底部的小圆点指示器的容器
+        pointContainer = new LinearLayout(mContext);
+        pointContainer.setOrientation(LinearLayout.HORIZONTAL);
+//        pointContainer.setPadding(10,10,10,10);
+
+        pointContainer.setBackgroundResource(R.color.skyblue);
+        LayoutParams lp_indicator = new LayoutParams(RMP, 20);
+        lp_indicator.addRule(ALIGN_PARENT_BOTTOM);
+        lp_indicator.setMargins(0,0,0,20);
+//        lp_indicator.addRule(CENTER_HORIZONTAL);
+        addView(pointContainer,lp_indicator);
 
 
     }
@@ -75,8 +79,10 @@ public class Banner extends RelativeLayout {
         this.mPicUrls = picUrls;
         mCount = picUrls.size();
         mImageViewList = new ArrayList<>();
+
         for (int i = 0; i < mPicUrls.size(); i++) {
-            mImageViewList.add(new ImageView(mContext));
+            ImageView iv = new ImageView(mContext);
+            mImageViewList.add(iv);
         }
         loadPicFromNet();
 
@@ -92,6 +98,7 @@ public class Banner extends RelativeLayout {
         for (int i = 0; i < mPicUrls.size(); i++) {
             Glide.with(mContext)
                     .load(mPicUrls.get(i))
+                    .centerCrop()
                     .into(mImageViewList.get(i));
         }
 
@@ -161,14 +168,17 @@ public class Banner extends RelativeLayout {
         }
         ImageView iv_indicator;
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LWC, LWC);
+        lp.gravity = Gravity.CENTER_HORIZONTAL;
+        lp.setMargins(5,5,5,5);
 
         mIndicatorList = new ArrayList<>();
         for (int i = 0; i < mCount; i++) {
             iv_indicator = new ImageView(mContext);
-            iv_indicator.setPadding(5,5,5,5);
-            iv_indicator.setLayoutParams(lp);
+//            iv_indicator.setPadding(5,5,5,5);
+//            iv_indicator.setLayoutParams(lp);
             iv_indicator.setBackgroundResource(R.drawable.circle_indicator_shape);
-            pointContainer.addView(iv_indicator);
+
+            pointContainer.addView(iv_indicator,lp);
             mIndicatorList.add(iv_indicator);
         }
     }
@@ -185,6 +195,13 @@ public class Banner extends RelativeLayout {
         }
         return super.dispatchTouchEvent(ev);
     }
+
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
+//                MeasureSpec.AT_MOST);
+//        super.onMeasure(widthMeasureSpec, expandSpec);
+//    }
 
 
     class MyAdapter extends PagerAdapter{
