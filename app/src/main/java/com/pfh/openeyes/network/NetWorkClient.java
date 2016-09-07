@@ -14,6 +14,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -41,9 +42,6 @@ public class NetWorkClient {
     }
 
     public Retrofit retrofit() {
-
-
-
         return new Retrofit.Builder()
                     .baseUrl(ApiStores.API_SERVER_URL)
                     .addConverterFactory(GsonConverterFactory.create())
@@ -55,6 +53,8 @@ public class NetWorkClient {
     private OkHttpClient initOkHttpClient(){
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 
         Interceptor cacheInterceptor = new Interceptor() {
             @Override
@@ -95,7 +95,6 @@ public class NetWorkClient {
 //        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 //        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 //        //设置 Debug Log 模式
-//        builder.addInterceptor(loggingInterceptor);
 
         builder.connectTimeout(5000, TimeUnit.SECONDS);
         //错误重连

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,10 +27,13 @@ public class Banner extends RelativeLayout {
 
     private List<String> mPicUrls;//图片的url
     private List<ImageView> mImageViewList;//viewpager中的imageview
+    private List<ImageView> mIndicatorList;
     private int mCount;//有几项item
     private Context mContext;
     private LinearLayout pointContainer;//指示器的容器
     private ViewPager mViewPager;
+    private int mCurrentItem = 0;
+    private long duration = 1000;
 
     public Banner(Context context) {
         this(context,null);
@@ -80,10 +84,12 @@ public class Banner extends RelativeLayout {
 
         initIndicator();
 
+        startPlay();
+
     }
 
     private void loadPicFromNet() {
-        for (int i = 0; i < mImageViewList.size(); i++) {
+        for (int i = 0; i < mPicUrls.size(); i++) {
             Glide.with(mContext)
                     .load(mPicUrls.get(i))
                     .into(mImageViewList.get(i));
@@ -101,9 +107,15 @@ public class Banner extends RelativeLayout {
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(int position) {//position 从0开始
                 //更新Indicator
-
+                for (int i = 0; i < mIndicatorList.size(); i++) {
+                    if (i != position){
+                        mIndicatorList.get(i).setBackgroundResource(R.drawable.circle_indicator_shape);
+                    }else {
+                        mIndicatorList.get(i).setBackgroundResource(R.drawable.circle_indicator_shape_select);
+                    }
+                }
             }
 
             @Override
@@ -112,6 +124,32 @@ public class Banner extends RelativeLayout {
             }
         });
 
+    }
+
+    Runnable task = new Runnable() {
+        @Override
+        public void run() {
+//            mCurrentItem = mCurrentItem +1;
+//            if (mCurrentItem > mCount - 1){
+//                mCurrentItem = 0;
+//            }
+            mCurrentItem = mCurrentItem % mCount + 1;
+            if (mCurrentItem == 1){
+                mViewPager.setCurrentItem(mCurrentItem,false);//最后一页到第一页，快速转到
+            }else {
+                mViewPager.setCurrentItem(mCurrentItem,true);
+            }
+            postDelayed(task,duration);
+        }
+    };
+
+    public void startPlay(){
+        stopPlay();
+        postDelayed(task,duration);
+    }
+
+    private void stopPlay() {
+        removeCallbacks(task);
     }
 
     /**
@@ -124,14 +162,30 @@ public class Banner extends RelativeLayout {
         ImageView iv_indicator;
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LWC, LWC);
 
+        mIndicatorList = new ArrayList<>();
         for (int i = 0; i < mCount; i++) {
             iv_indicator = new ImageView(mContext);
             iv_indicator.setPadding(5,5,5,5);
             iv_indicator.setLayoutParams(lp);
             iv_indicator.setBackgroundResource(R.drawable.circle_indicator_shape);
             pointContainer.addView(iv_indicator);
+            mIndicatorList.add(iv_indicator);
         }
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                stopPlay();
+                break;
+            case MotionEvent.ACTION_UP:
+                startPlay();
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
 
     class MyAdapter extends PagerAdapter{
 

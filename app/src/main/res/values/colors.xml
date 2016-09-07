@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="white">#FFFFFF</color><!-- 白色 -->
+    <color name="lightwhite">#0ff5f5f5</color><!-- 带透明度白色-->
     <color name="yellow">#ffff00</color> <!-- 黄色 -->
     <color name="black">#000000</color> <!-- 黑色 -->
     <color name="red">#ff0000</color> <!-- 红色 -->
