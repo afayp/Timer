@@ -34,7 +34,7 @@ public class Banner extends RelativeLayout {
     private LinearLayout pointContainer;//指示器的容器
     private ViewPager mViewPager;
     private int mCurrentItem = 0;
-    private long duration = 1000;
+    private long duration = 1500;
 
     public Banner(Context context) {
         this(context,null);
@@ -52,7 +52,7 @@ public class Banner extends RelativeLayout {
     }
 
     /**
-     *
+     *初始化view，跟数据没有关系
      */
     private void initView() {
         //viewpger
@@ -187,9 +187,11 @@ public class Banner extends RelativeLayout {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
+
                 stopPlay();
                 break;
             case MotionEvent.ACTION_UP:
+
                 startPlay();
                 break;
         }
