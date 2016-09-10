@@ -50,6 +50,17 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViewPager();
+        initIndicator();
+    }
+
+    private void initIndicator() {
+        mIndicator.setIndicatorListener(new MainActivityIndicator.IndicatorListener() {
+            @Override
+            public void onClickInidcator(int position) {
+                mViewPager.setCurrentItem(position);
+            }
+        });
+
     }
 
     @Override

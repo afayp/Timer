@@ -76,6 +76,28 @@ public class Data implements Serializable{
 
     private String font;
 
+    //horizontalScrollCard里面：
+
+    private List<FeedItem> itemList;
+
+    private int count;
+
+    public List<FeedItem> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<FeedItem> itemList) {
+        this.itemList = itemList;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     public String getText() {
         return text;
     }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +34,8 @@ public class Banner extends RelativeLayout {
     private LinearLayout pointContainer;//指示器的容器
     private ViewPager mViewPager;
     private int mCurrentItem = 0;
-    private long duration = 1500;
+    private long duration = 2500;
+    private onItemClickListner onItemClickListner;
 
     public Banner(Context context) {
         this(context,null);
@@ -65,8 +66,8 @@ public class Banner extends RelativeLayout {
         pointContainer.setOrientation(LinearLayout.HORIZONTAL);
 //        pointContainer.setPadding(10,10,10,10);
 
-        pointContainer.setBackgroundResource(R.color.skyblue);
-        LayoutParams lp_indicator = new LayoutParams(RMP, 20);
+//        pointContainer.setBackgroundResource(R.color.skyblue);
+        LayoutParams lp_indicator = new LayoutParams(RWC, 40);
         lp_indicator.addRule(ALIGN_PARENT_BOTTOM);
         lp_indicator.setMargins(0,0,0,20);
 //        lp_indicator.addRule(CENTER_HORIZONTAL);
@@ -78,12 +79,16 @@ public class Banner extends RelativeLayout {
     public void setPicUrls(List<String> picUrls){
         this.mPicUrls = picUrls;
         mCount = picUrls.size();
+        Log.e("count: ",mCount+"");
         mImageViewList = new ArrayList<>();
 
         for (int i = 0; i < mPicUrls.size(); i++) {
             ImageView iv = new ImageView(mContext);
             mImageViewList.add(iv);
         }
+
+        initListener();
+
         loadPicFromNet();
 
         initViewPager();
@@ -92,6 +97,18 @@ public class Banner extends RelativeLayout {
 
         startPlay();
 
+    }
+
+    private void initListener() {
+        for (int i = 0; i < mImageViewList.size(); i++) {
+            final int position = i;
+            mImageViewList.get(i).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListner.onclik(position);
+                }
+            });
+        }
     }
 
     private void loadPicFromNet() {
@@ -106,6 +123,7 @@ public class Banner extends RelativeLayout {
 
     private void initViewPager() {
         mViewPager.setAdapter(new MyAdapter());
+        mViewPager.setCurrentItem(mCurrentItem);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -116,13 +134,16 @@ public class Banner extends RelativeLayout {
             @Override
             public void onPageSelected(int position) {//position 从0开始
                 //更新Indicator
-                for (int i = 0; i < mIndicatorList.size(); i++) {
-                    if (i != position){
-                        mIndicatorList.get(i).setBackgroundResource(R.drawable.circle_indicator_shape);
-                    }else {
-                        mIndicatorList.get(i).setBackgroundResource(R.drawable.circle_indicator_shape_select);
-                    }
-                }
+//                Log.e("TAG","position: "+position);
+//                mCurrentItem = position;
+//                for (int i = 0; i < mIndicatorList.size(); i++) {
+//                    if (i != position){
+//                        mIndicatorList.get(i).setBackgroundResource(R.drawable.circle_indicator_shape);
+//                    }else {
+//                        Log.e("TAG","update !");
+//                        mIndicatorList.get(i).setBackgroundResource(R.drawable.circle_indicator_shape_select);
+//                    }
+//                }
             }
 
             @Override
@@ -136,12 +157,9 @@ public class Banner extends RelativeLayout {
     Runnable task = new Runnable() {
         @Override
         public void run() {
-//            mCurrentItem = mCurrentItem +1;
-//            if (mCurrentItem > mCount - 1){
-//                mCurrentItem = 0;
-//            }
-            mCurrentItem = mCurrentItem % mCount + 1;
-            if (mCurrentItem == 1){
+            mCurrentItem = (mCurrentItem+1) % mCount ;
+
+            if (mCurrentItem == 0){
                 mViewPager.setCurrentItem(mCurrentItem,false);//最后一页到第一页，快速转到
             }else {
                 mViewPager.setCurrentItem(mCurrentItem,true);
@@ -166,14 +184,14 @@ public class Banner extends RelativeLayout {
         if (pointContainer != null){
             pointContainer.removeAllViews();
         }
-        ImageView iv_indicator;
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LWC, LWC);
-        lp.gravity = Gravity.CENTER_HORIZONTAL;
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(20, 20);
+//        lp.gravity = Gravity.CENTER_HORIZONTAL;
         lp.setMargins(5,5,5,5);
 
         mIndicatorList = new ArrayList<>();
         for (int i = 0; i < mCount; i++) {
-            iv_indicator = new ImageView(mContext);
+            ImageView iv_indicator = new ImageView(mContext);
 //            iv_indicator.setPadding(5,5,5,5);
 //            iv_indicator.setLayoutParams(lp);
             iv_indicator.setBackgroundResource(R.drawable.circle_indicator_shape);
@@ -195,6 +213,7 @@ public class Banner extends RelativeLayout {
                 startPlay();
                 break;
         }
+//        return true;
         return super.dispatchTouchEvent(ev);
     }
 
@@ -228,5 +247,13 @@ public class Banner extends RelativeLayout {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView(mImageViewList.get(position));
         }
+    }
+
+    public interface onItemClickListner {
+        void onclik(int position);
+    }
+
+    public void setOnClickListener(onItemClickListner listener){
+        this.onItemClickListner = listener;
     }
 }

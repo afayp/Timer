@@ -6,6 +6,9 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.pfh.openeyes.network.ApiStores;
+import com.pfh.openeyes.network.NetWorkClient;
+
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
@@ -19,7 +22,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected Context mContext;
     protected CompositeSubscription mCompositeSubscription;
-//    protected ApiStores apiSotres;
+    protected ApiStores apiStores;
     protected Toast mToast;
 
 
@@ -28,7 +31,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         EventBus.getDefault().register(this);
-//        apiSotres = new NetWorkClient().retrofit().create(ApiStores.class);
+        apiStores = NetWorkClient.getInstance().retrofit().create(ApiStores.class);
     }
 
     @Override

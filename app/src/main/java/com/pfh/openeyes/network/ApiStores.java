@@ -1,5 +1,6 @@
 package com.pfh.openeyes.network;
 
+import com.pfh.openeyes.model.Discovery;
 import com.pfh.openeyes.model.Feed;
 
 import retrofit2.http.GET;
@@ -21,5 +22,15 @@ public interface ApiStores {
     //精选,加载下一页
     @GET("api/v2/feed")
     Observable<Feed> loadFeedNextPage(@Query("date") String date,@Query("num") String num);
+
+    //发现页首页信息
+    @GET("api/v3/discovery")
+    Observable<Discovery> loadDiscovery();
+
+    //发现，最受欢迎
+    @GET("api/v3/ranklist")
+    Observable<Discovery> loadRankList(@Query("num") String num,@Query("strategy") String strategy);
+
+
 
 }

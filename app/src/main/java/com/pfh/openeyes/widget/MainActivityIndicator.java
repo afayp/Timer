@@ -13,12 +13,13 @@ import com.pfh.openeyes.R;
 /**
  * Created by Administrator on 2016/9/3.
  */
-public class MainActivityIndicator extends LinearLayout{
+public class MainActivityIndicator extends LinearLayout {
 
     private ImageView tab_1_solid;
     private ImageView tab_2_solid;
     private ImageView tab_3_solid;
     private ImageView tab_4_solid;
+    private IndicatorListener indicatorListener;
 
     public MainActivityIndicator(Context context) {
         this(context,null);
@@ -41,7 +42,38 @@ public class MainActivityIndicator extends LinearLayout{
         tab_3_solid = (ImageView) view.findViewById(R.id.tab_3_solid);
         tab_4_solid = (ImageView) view.findViewById(R.id.tab_4_solid);
         initAlpha();
+        initClickListener();
         addView(view,new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
+
+
+    private void initClickListener() {
+        tab_1_solid.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                indicatorListener.onClickInidcator(0);
+            }
+        });
+        tab_2_solid.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                indicatorListener.onClickInidcator(1);
+            }
+        });
+        tab_3_solid.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                indicatorListener.onClickInidcator(2);
+            }
+        });
+        tab_4_solid.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                indicatorListener.onClickInidcator(3);
+            }
+        });
+
     }
 
     private void initAlpha() {
@@ -62,6 +94,16 @@ public class MainActivityIndicator extends LinearLayout{
             tab_3_solid.setAlpha(1-offY);
             tab_4_solid.setAlpha(offY);
         }
+    }
+
+
+    public interface IndicatorListener{
+        void onClickInidcator(int position);
+    }
+
+    public void setIndicatorListener(IndicatorListener indicatorListener){
+        this.indicatorListener = indicatorListener;
+
     }
 
 }

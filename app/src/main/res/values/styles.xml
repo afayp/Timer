@@ -10,8 +10,10 @@
 
     <declare-styleable name="CustomToolbar">
         <attr name="left_text" format="string"/>
+        <attr name="left_icon" format="reference"/>
         <attr name="center_text" format="string"/>
         <attr name="right_icon" format="reference"/>
+        <attr name="right_text" format="string"/>
     </declare-styleable>
 
 </resources>

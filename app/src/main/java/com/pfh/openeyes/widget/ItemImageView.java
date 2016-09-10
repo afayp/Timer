@@ -50,6 +50,7 @@ public class ItemImageView extends LinearLayout {
     //移动的阈值
     private static final int TOUCH_SLOP = 1;
     private Runnable cancel;
+    private LinearLayout ll_description;
 
 
     public ItemImageView(Context context) {
@@ -74,6 +75,7 @@ public class ItemImageView extends LinearLayout {
         tv_category = (TextView) view.findViewById(R.id.tv_category);
         tv_duration = (TextView) view.findViewById(R.id.tv_duration);
         rl_text = (RelativeLayout) view.findViewById(R.id.rl_text);
+        ll_description = (LinearLayout) view.findViewById(R.id.ll_description);
 
         brightenAnimator = ValueAnimator.ofFloat(brightness, 20);
         brightenAnimator.setDuration(500);
@@ -194,6 +196,11 @@ public class ItemImageView extends LinearLayout {
         return iv_bg;
     }
 
+    public void hideDescription(){
+        ll_description.setVisibility(GONE);
+
+    }
+
     //改变图片的亮度方法 0--原样 >0---调亮 <0---调暗
     private void changeLight(float brightness) {
         ColorMatrix cMatrix = new ColorMatrix();
@@ -204,7 +211,6 @@ public class ItemImageView extends LinearLayout {
 
     private void gotoDetail(){
         LogUtil.e("goto Detail");
-
     }
 
 //    @Override

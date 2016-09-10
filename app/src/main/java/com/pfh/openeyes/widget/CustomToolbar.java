@@ -27,6 +27,10 @@ public class CustomToolbar extends LinearLayout {
     private TextView tv_left;
     private ImageView right_icon;
     private TextView tv_center;
+    private ImageView iv_left;
+    private TextView tv_right;
+    private Drawable left_drawable;
+    private String right_text;
 
 
     public CustomToolbar(Context context) {
@@ -40,10 +44,11 @@ public class CustomToolbar extends LinearLayout {
     public CustomToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomToolbar, defStyleAttr, 0);
-//        left_drawable = typedArray.getDrawable(R.styleable.CustomToolbar_left_text);
         left_text = typedArray.getString(R.styleable.CustomToolbar_left_text);
+        left_drawable = typedArray.getDrawable(R.styleable.CustomToolbar_left_icon);
         center_text = typedArray.getString(R.styleable.CustomToolbar_center_text);
         right_drawable = typedArray.getDrawable(R.styleable.CustomToolbar_right_icon);
+        right_text = typedArray.getString(R.styleable.CustomToolbar_right_text);
         typedArray.recycle();
         initView(context);
     }
@@ -51,13 +56,21 @@ public class CustomToolbar extends LinearLayout {
     private void initView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.widget_custom_toolbar, null);
         tv_left = (TextView) view.findViewById(R.id.left_text);
+        iv_left = (ImageView) view.findViewById(R.id.left_iv);
         tv_center = (TextView) view.findViewById(R.id.center_text);
         right_icon = (ImageView) view.findViewById(R.id.right_icon);
+        tv_right = (TextView) view.findViewById(R.id.right_text);
 
         tv_left.setText(left_text);
+        iv_left.setImageDrawable(left_drawable);
         tv_center.setText(center_text);
         right_icon.setImageDrawable(right_drawable);
+        tv_right.setText(right_text);
         addView(view,new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
+    public ImageView getLeftIcon(){
+        return iv_left;
     }
 
 
