@@ -31,6 +31,23 @@ public interface ApiStores {
     @GET("api/v3/ranklist")
     Observable<Discovery> loadRankList(@Query("num") String num,@Query("strategy") String strategy);
 
+    //发现，热门专题
+    @GET("api/v3/specialTopics")
+    Observable<Discovery> loadSpecialTopics(@Query("start") String start,@Query("num") String num);
+
+    //发现，360°全景
+    @GET("api/v3/tag/videos")
+    Observable<Discovery> loadPanorama(@Query("tagId") String tagId,@Query("strategy") String strategy,@Query("num") String num);
+
+    //发现，360°全景
+    @GET("api/v3/videos")
+    Observable<Discovery> loadCategory(@Query("categoryId") String tagId,@Query("strategy") String strategy,@Query("num") String num);
+
+    //作者
+    @GET("api/v3/tabs/pgcs")
+    Observable<Discovery> loadAuthorData();
+
+
 
 
 }

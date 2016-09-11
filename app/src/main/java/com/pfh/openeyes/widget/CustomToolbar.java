@@ -73,6 +73,10 @@ public class CustomToolbar extends LinearLayout {
         return iv_left;
     }
 
+    public ImageView getRightIcon(){
+        return right_icon;
+    }
+
 
     /**
      * @param text null或者"" 表示隐藏

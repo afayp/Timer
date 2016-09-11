@@ -1,16 +1,18 @@
 package com.pfh.openeyes.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/10.
  */
-public class Discovery {
+public class Discovery implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     private List<FeedItem> itemList;
     private int count;
     private int total;
-//    private String nextPageUrl;
+    private String nextPageUrl;
 
 
     @Override
@@ -20,6 +22,14 @@ public class Discovery {
                 ", count=" + count +
                 ", total=" + total +
                 '}';
+    }
+
+    public String getNextPageUrl() {
+        return nextPageUrl;
+    }
+
+    public void setNextPageUrl(String nextPageUrl) {
+        this.nextPageUrl = nextPageUrl;
     }
 
     public List<FeedItem> getItemList() {

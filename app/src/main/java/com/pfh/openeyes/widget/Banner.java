@@ -105,7 +105,9 @@ public class Banner extends RelativeLayout {
             mImageViewList.get(i).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListner.onclik(position);
+                    if (onItemClickListner != null){
+                        onItemClickListner.onclik(position);
+                    }
                 }
             });
         }

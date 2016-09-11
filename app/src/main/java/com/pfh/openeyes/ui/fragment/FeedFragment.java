@@ -138,7 +138,6 @@ public class FeedFragment extends BaseFragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-//                LogUtil.e("firstVisibleItemPosition: "+firstVisibleItemPosition);
                 Data data = allFeedItemList.get(firstVisibleItemPosition).getData();
                 if (data.getDataType().equals("TextHeader")) {
                     String date = TimeUtils.convertDate(allFeedItemList.get(firstVisibleItemPosition + 1).getData().getDate());

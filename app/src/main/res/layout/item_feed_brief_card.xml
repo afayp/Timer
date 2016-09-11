@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="220dp">
+    android:layout_height="100dp">
 
-    <ImageView
-        android:id="@+id/iv_banner"
+    <com.pfh.openeyes.widget.BriefCard
+        android:id="@+id/briefcard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

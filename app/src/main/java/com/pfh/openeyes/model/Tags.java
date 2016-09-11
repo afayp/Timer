@@ -15,7 +15,7 @@ public class Tags implements Serializable{
 
     private String actionUrl;
 
-    private String adTrack;
+//    private String adTrack;
 
     public void setId(int id){
         this.id = id;
@@ -35,11 +35,11 @@ public class Tags implements Serializable{
     public String getActionUrl(){
         return this.actionUrl;
     }
-    public void setAdTrack(String adTrack){
-        this.adTrack = adTrack;
-    }
-    public String getAdTrack(){
-        return this.adTrack;
-    }
+//    public void setAdTrack(String adTrack){
+//        this.adTrack = adTrack;
+//    }
+//    public String getAdTrack(){
+//        return this.adTrack;
+//    }
 
 }

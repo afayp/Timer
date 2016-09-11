@@ -82,6 +82,49 @@ public class Data implements Serializable{
 
     private int count;
 
+    //作者页面
+
+    private String icon;
+
+    private String subTitle;
+
+    private Header header;
+
+    private Author author;
+
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
+    }
+
+    public Header getHeader() {
+        return header;
+    }
+
+    public void setHeader(Header header) {
+        this.header = header;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
     public List<FeedItem> getItemList() {
         return itemList;
     }

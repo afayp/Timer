@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.Toast;
 
 import com.pfh.openeyes.network.ApiStores;
 import com.pfh.openeyes.network.NetWorkClient;
@@ -20,6 +21,7 @@ public class BaseFragment extends Fragment {
     public Context mContext;
     protected CompositeSubscription mCompositeSubscription;
     protected ApiStores apiStores;
+    private Toast mToast;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,4 +57,14 @@ public class BaseFragment extends Fragment {
         }
         mCompositeSubscription.add(subscription);
     }
+
+    public void showToast(String text) {
+        if (mToast == null){
+            mToast = Toast.makeText(mContext,text,Toast.LENGTH_SHORT);
+        }else {
+            mToast.setText(text);
+        }
+        mToast.show();
+    }
+
 }

@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pfh.openeyes.R;
 import com.pfh.openeyes.util.LogUtil;
@@ -124,14 +123,14 @@ public class ItemImageView extends LinearLayout {
         };
 
 
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Click!", Toast.LENGTH_SHORT).show();
-                LogUtil.e("click!");
-                gotoDetail();
-            }
-        });
+//        this.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(context, "Click!", Toast.LENGTH_SHORT).show();
+//                LogUtil.e("click!");
+//                gotoDetail();
+//            }
+//        });
 
         this.setOnTouchListener(new OnTouchListener() {
             @Override
@@ -173,7 +172,7 @@ public class ItemImageView extends LinearLayout {
                         break;
 
                 }
-                return true;
+                return false;
             }
         });
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,7 +129,7 @@ public class DiscoveryFragment extends BaseFragment {
         iv_rankList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, DetailActivity.class);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra(DetailActivity.TYPE,DetailActivity.TYPE_RANK_LIST);
                 startActivity(intent);
             }
@@ -137,14 +138,18 @@ public class DiscoveryFragment extends BaseFragment {
         iv_specialTopics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra(DetailActivity.TYPE,DetailActivity.TYPE_SPECIAL_TOPICS);
+                startActivity(intent);
             }
         });
 
         iv_360.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra(DetailActivity.TYPE,DetailActivity.TYPE_PANORAMA);
+                startActivity(intent);
             }
         });
     }
@@ -155,6 +160,16 @@ public class DiscoveryFragment extends BaseFragment {
         recyclerView.addItemDecoration(new DividerGridItemDecoration(mContext));
         CategoryAdapter categoryAdapter = new CategoryAdapter(categories, mContext);
         recyclerView.setAdapter(categoryAdapter);
+        categoryAdapter.setOnItemClickListener(new CategoryAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(FeedItem feedItem) {
+                Log.e("TAG",feedItem.getData().getTitle()+"id: "+feedItem.getData().getId());
+                Intent intent = new Intent(mContext, DetailActivity.class);
+                intent.putExtra(DetailActivity.TYPE,DetailActivity.TYPE_CATEGORY);
+                intent.putExtra(DetailActivity.FEED_ITEM,feedItem);
+                startActivity(intent);
+            }
+        });
     }
 
     private void handleData(Discovery discovery) {

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">OpenEyes</string>
     <string name="eyepetizer">eyepetizer</string>
+    <string name="topic">专题</string>
 </resources>
