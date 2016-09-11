@@ -12,6 +12,7 @@ import com.pfh.openeyes.model.Discovery;
 import com.pfh.openeyes.model.FeedItem;
 import com.pfh.openeyes.ui.adapter.FeedAdapter;
 import com.pfh.openeyes.ui.base.BaseFragment;
+import com.pfh.openeyes.util.DividerItemDecoration;
 import com.pfh.openeyes.util.LogUtil;
 import com.pfh.openeyes.widget.CustomRecyclerview;
 
@@ -62,6 +63,7 @@ public class AuthorFragment extends BaseFragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerview.setLayoutManager(linearLayoutManager);
+        recyclerview.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         feedAdapter = new FeedAdapter(feedItemList, mContext);
         recyclerview.setAdapter(feedAdapter);
     }

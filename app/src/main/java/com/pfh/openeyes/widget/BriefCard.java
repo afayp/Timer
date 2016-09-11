@@ -66,7 +66,6 @@ public class BriefCard extends LinearLayout {
     public void setHeader(Header header){
         Glide.with(context)
                 .load(header.getIcon())
-                .centerCrop()
                 .into(iv_icon);
         tv_title.setText(header.getTitle());
         tv_subTitle.setText(header.getSubTitle());

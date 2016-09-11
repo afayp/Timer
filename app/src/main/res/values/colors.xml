@@ -13,4 +13,6 @@
     <color name="blue">#0000FF</color> <!-- 蓝色 -->
     <color name="lightblue">#add8e6</color> <!-- 亮蓝色 -->
     <color name="skyblue">#87ceeb</color> <!-- 天蓝色 -->
+    <color name="lighter_gray">#ddd</color>
+    <color name="darker_gray">#aaa</color>
 </resources>
