@@ -3,6 +3,8 @@ package com.pfh.openeyes.network;
 import com.pfh.openeyes.model.Discovery;
 import com.pfh.openeyes.model.Feed;
 
+import java.util.List;
+
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -46,6 +48,10 @@ public interface ApiStores {
     //作者
     @GET("api/v3/tabs/pgcs")
     Observable<Discovery> loadAuthorData();
+
+    //搜索关键词
+    @GET("api/v3/queries/hot")
+    Observable<List<String>> loadHotKeyword();
 
 
 

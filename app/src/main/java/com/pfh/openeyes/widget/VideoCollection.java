@@ -2,7 +2,6 @@ package com.pfh.openeyes.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,7 @@ public class VideoCollection extends LinearLayout {
         for (int i = 0; i < itemList.size(); i++) {
             ScrollItem scrollItem = new ScrollItem(context);
             scrollItem.setFeedItem(itemList.get(i));
-            ll_content.addView(scrollItem);
+            ll_content.addView(scrollItem,new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
     }
 }

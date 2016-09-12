@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:layout_height="wrap_content">
 
     <com.pfh.openeyes.widget.BriefCard
         android:id="@+id/briefcard"
@@ -14,7 +14,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7">
+        android:layout_weight="7"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/ll_content"
@@ -22,7 +23,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
         </LinearLayout>
-
 
     </HorizontalScrollView>
 

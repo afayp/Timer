@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:padding="5dp"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="5dp"
     android:gravity="center_vertical">
 
-    <ImageView
+    <com.pfh.openeyes.widget.CircleImageView
         android:id="@+id/iv_icon"
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
-        android:background="@mipmap/ic_launcher"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        app:border_width="1dp"
+        app:border_color="@color/white"
+        android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -30,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="饭后 Foodlink"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
 
@@ -40,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="5个视频"
                 android:paddingLeft="10dp"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textColor="@color/darker_gray"/>
 
         </LinearLayout>
@@ -52,8 +57,8 @@
             android:text="一个人，一道菜，一种生活方式。相同食材不同感受，饭合视频让你饱眼福，饱口福"
             android:lines="1"
             android:singleLine="true"
-            android:textSize="14sp"
-            android:textColor="@color/black"/>
+            android:textSize="12sp"
+            android:textColor="@color/darker_gray"/>
     </LinearLayout>
 
     <ImageView

@@ -41,13 +41,11 @@ public class ScrollItem extends LinearLayout {
 
     private void initView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.widget_scroll_item, null);
-        addView(view,new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
+        addView(view,new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
         iv_cover = (ImageView) view.findViewById(R.id.iv_cover);
         tv_title = (TextView) view.findViewById(R.id.tv_title);
         tv_category = (TextView) view.findViewById(R.id.tv_category);
         tv_duration = (TextView) view.findViewById(R.id.tv_duration);
-
     }
 
     public void setFeedItem(FeedItem feedItem){
@@ -61,7 +59,7 @@ public class ScrollItem extends LinearLayout {
                 .into(iv_cover);
 
         tv_title.setText(feedItem.getData().getTitle());
-        tv_category.setText("#"+feedItem.getData().getCategory()+" / ");
+        tv_category.setText("#"+feedItem.getData().getCategory()+"  /  ");
         tv_duration.setText(TimeUtils.convertTime(feedItem.getData().getDuration()));
     }
 

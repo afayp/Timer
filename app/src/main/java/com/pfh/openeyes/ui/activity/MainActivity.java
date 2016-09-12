@@ -1,9 +1,11 @@
 package com.pfh.openeyes.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.pfh.openeyes.R;
 import com.pfh.openeyes.event.ChangeDateEvent;
@@ -49,8 +51,18 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initToolbar();
         initViewPager();
         initIndicator();
+    }
+
+    private void initToolbar() {
+        mToolbar.getRightIcon().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,SearchActivity.class));
+            }
+        });
     }
 
     private void initIndicator() {
