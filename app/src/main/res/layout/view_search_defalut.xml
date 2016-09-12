@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -17,11 +20,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="- 热门搜索 - "
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:gravity="center"/>
 
     <com.pfh.openeyes.widget.FlowLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
