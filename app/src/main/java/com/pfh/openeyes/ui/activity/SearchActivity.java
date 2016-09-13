@@ -1,11 +1,15 @@
 package com.pfh.openeyes.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -94,6 +98,37 @@ public class SearchActivity extends BaseActivity {
             flowLayout.addView(textViewList.get(i),lp);
         }
         ll_content.addView(view,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        startAnim(ll_content);
+    }
+
+    private void startAnim(final View view){
+        int height = view.getHeight();
+        final int top = view.getTop();
+
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, height);
+        valueAnimator.setDuration(4000);
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int dY = (int) valueAnimator.getAnimatedValue();
+                view.setY(top+dY);
+            }
+        });
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                view.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+            }
+        });
+        valueAnimator.start();
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN,priority = 1,sticky = true)

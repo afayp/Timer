@@ -125,31 +125,43 @@ public class FlowLayout extends ViewGroup {
         mLineHeight.add(lineHeight);
         mAllChildViews.add(lineViews);
 
-        //设置子View的位置  
-        int left = 0;
         int top = 0;
+
         //获取行数  
         int lineCount = mAllChildViews.size();
         for(int i = 0; i < lineCount; i ++){
             //当前行的views和高度  
             lineViews = mAllChildViews.get(i);
             lineHeight = mLineHeight.get(i);
+            //当前view如果紧挨着的话一共的宽度
+            int totalWidth = 0;
             for(int j = 0; j < lineViews.size(); j ++){
                 View child = lineViews.get(j);
+                MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
+
                 //判断是否显示  
                 if(child.getVisibility() == View.GONE){
                     continue;
                 }
+                totalWidth = totalWidth + child.getMeasuredWidth() + lp.leftMargin +lp.rightMargin;
+            }
+
+            int space = (getMeasuredWidth() - totalWidth) / 2;//两边每边预留出的空间
+            //设置子View的位置
+            int left = space;
+
+            for (int k = 0; k < lineViews.size(); k++) {
+                View child = lineViews.get(k);
                 MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
-                int cLeft = left + lp.leftMargin;
+                int cLeft = left + lp.leftMargin ;
                 int cTop = top + lp.topMargin;
                 int cRight = cLeft + child.getMeasuredWidth();
                 int cBottom = cTop + child.getMeasuredHeight();
-                //进行子View进行布局  
+                //进行子View进行布局
                 child.layout(cLeft, cTop, cRight, cBottom);
                 left += child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
             }
-            left = 0;
+//            left = 0;
             top += lineHeight;
         }
 

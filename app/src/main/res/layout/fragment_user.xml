@@ -9,4 +9,11 @@
         android:textSize="20sp"
         android:text="User Fragment"/>
 
+    <com.pfh.openeyes.widget.DrawableCenterEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/icon_search"
+        android:hint="lll"
+        android:gravity="center_horizontal"/>
+
 </LinearLayout>
