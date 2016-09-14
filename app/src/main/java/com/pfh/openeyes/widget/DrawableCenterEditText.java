@@ -25,6 +25,7 @@ public class DrawableCenterEditText extends EditText {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //...
         Drawable[] drawables = getCompoundDrawables();
         if (drawables != null) {
             Drawable drawableLeft = drawables[0];

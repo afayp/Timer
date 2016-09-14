@@ -85,6 +85,7 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void initDefalutView() {
+        //...
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_search_defalut, null);
         FlowLayout flowLayout = (FlowLayout) view.findViewById(R.id.fl_content);

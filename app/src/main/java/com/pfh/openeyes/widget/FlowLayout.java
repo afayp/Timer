@@ -161,7 +161,6 @@ public class FlowLayout extends ViewGroup {
                 child.layout(cLeft, cTop, cRight, cBottom);
                 left += child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
             }
-//            left = 0;
             top += lineHeight;
         }
 
