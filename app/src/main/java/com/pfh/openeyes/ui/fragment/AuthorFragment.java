@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.pfh.openeyes.R;
 import com.pfh.openeyes.model.Discovery;
 import com.pfh.openeyes.model.FeedItem;
+import com.pfh.openeyes.model.PgcInfo;
 import com.pfh.openeyes.ui.activity.AuthorDetailActivity;
 import com.pfh.openeyes.ui.adapter.FeedAdapter;
 import com.pfh.openeyes.ui.base.BaseFragment;
@@ -73,8 +74,15 @@ public class AuthorFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, FeedItem feedItem, int position) {
                 if (feedItem.getData().getDataType().equals("BriefCard")){
+                    PgcInfo pgcInfo = new PgcInfo();
+                    pgcInfo.setIcon(feedItem.getData().getIcon());
+                    pgcInfo.setName(feedItem.getData().getTitle());
+                    pgcInfo.setDescription(feedItem.getData().getDescription());
+                    pgcInfo.setActionUrl(feedItem.getData().getActionUrl());
+
                     Intent intent = new Intent(mContext, AuthorDetailActivity.class);
                     intent.putExtra(AuthorDetailActivity.PGCID,feedItem.getData().getId());
+                    intent.putExtra(AuthorDetailActivity.PGCINFO,pgcInfo);
                     startActivity(intent);
                 }else if (feedItem.getData().getDataType().equals("VideoCollection") ){
 

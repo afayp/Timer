@@ -2,7 +2,11 @@ package com.pfh.openeyes.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.pfh.openeyes.R;
 import com.pfh.openeyes.model.Discovery;
 import com.pfh.openeyes.model.FeedItem;
@@ -27,8 +31,16 @@ public class AuthorDetailActivity extends BaseActivity {
     CustomToolbar toolbar;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    @BindView(R.id.iv_icon)
+    ImageView iv_icon;
+    @BindView(R.id.tv_name)
+    TextView tv_name;
+    @BindView(R.id.tv_description)
+    TextView tv_description;
+
 
     public static final String PGCID = "pgcId";
+    public static final String PGCINFO = "pgcInfo";
     private String pgcId;
     private String[] strategys = {"date","shareCount"};
     private HashMap<String,List<FeedItem>> mData = new HashMap<>();
@@ -40,14 +52,30 @@ public class AuthorDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author_detail);
         pgcId = getIntent().getStringExtra(PGCID);
+        pgcInfo = (PgcInfo) getIntent().getSerializableExtra(PGCINFO);
+        initTop();
         loadData();
 
+    }
+
+    private void initTop() {
+        Glide.with(mContext)
+                .load(pgcInfo.getIcon())
+                .into(iv_icon);
+        tv_name.setText(pgcInfo.getName());
+        tv_description.setText(pgcInfo.getDescription());
+        toolbar.getLeftIcon().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void loadData() {
         for (int i = 0; i < strategys.length; i++) {
             final int index = i;
-            apiStores.loadAuthorDetail(strategys[index],"date","10")
+            apiStores.loadAuthorDetail(pgcId,strategys[index],"40")
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Discovery>() {
@@ -63,7 +91,6 @@ public class AuthorDetailActivity extends BaseActivity {
 
                         @Override
                         public void onNext(Discovery discovery) {
-                            pgcInfo = discovery.getPgcInfo();
                             mData.put(strategys[index],discovery.getItemList());
                         }
                     });
