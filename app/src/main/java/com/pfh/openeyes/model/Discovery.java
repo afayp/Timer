@@ -13,7 +13,7 @@ public class Discovery implements Serializable{
     private int count;
     private int total;
     private String nextPageUrl;
-
+    private PgcInfo pgcInfo;
 
     @Override
     public String toString() {
@@ -21,7 +21,17 @@ public class Discovery implements Serializable{
                 "itemList=" + itemList +
                 ", count=" + count +
                 ", total=" + total +
+                ", nextPageUrl='" + nextPageUrl + '\'' +
+                ", pgcInfo=" + pgcInfo +
                 '}';
+    }
+
+    public PgcInfo getPgcInfo() {
+        return pgcInfo;
+    }
+
+    public void setPgcInfo(PgcInfo pgcInfo) {
+        this.pgcInfo = pgcInfo;
     }
 
     public String getNextPageUrl() {

@@ -47,8 +47,19 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            getWindow().setEnterTransition(new Slide());
+//            getWindow().setExitTransition(new Slide());
+//        }
         setContentView(R.layout.activity_search);
         loadHotKeyword();
+        tv_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void loadHotKeyword() {
@@ -69,7 +80,6 @@ public class SearchActivity extends BaseActivity {
 
                     @Override
                     public void onNext(List<String> strings) {
-                        Log.e("TAG",strings.toString());
 
                         for (int i = 0; i < strings.size(); i++) {
                             TextView tv = new TextView(mContext);
@@ -91,10 +101,10 @@ public class SearchActivity extends BaseActivity {
         FlowLayout flowLayout = (FlowLayout) view.findViewById(R.id.fl_content);
         ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.leftMargin = 5;
-        lp.rightMargin = 5;
-        lp.topMargin = 5;
-        lp.bottomMargin = 5;
+        lp.leftMargin = 15;
+        lp.rightMargin = 15;
+        lp.topMargin = 15;
+        lp.bottomMargin = 15;
         for (int i = 0; i < textViewList.size(); i++) {
             flowLayout.addView(textViewList.get(i),lp);
         }

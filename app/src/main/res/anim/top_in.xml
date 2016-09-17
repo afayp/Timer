@@ -3,5 +3,4 @@
 
     <translate android:fromYDelta="-100%p" android:toYDelta="0%p" />
 
-
 </set>

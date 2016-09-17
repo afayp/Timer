@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.pfh.openeyes.R;
 import com.pfh.openeyes.model.Discovery;
 import com.pfh.openeyes.model.FeedItem;
-import com.pfh.openeyes.ui.activity.DetailActivity;
+import com.pfh.openeyes.ui.activity.DiscoveryDetailActivity;
 import com.pfh.openeyes.ui.adapter.CategoryAdapter;
 import com.pfh.openeyes.ui.base.BaseFragment;
 import com.pfh.openeyes.util.DividerGridItemDecoration;
@@ -129,8 +129,8 @@ public class DiscoveryFragment extends BaseFragment {
         iv_rankList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(DetailActivity.TYPE,DetailActivity.TYPE_RANK_LIST);
+                Intent intent = new Intent(getActivity(), DiscoveryDetailActivity.class);
+                intent.putExtra(DiscoveryDetailActivity.TYPE, DiscoveryDetailActivity.TYPE_RANK_LIST);
                 startActivity(intent);
             }
         });
@@ -138,8 +138,8 @@ public class DiscoveryFragment extends BaseFragment {
         iv_specialTopics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra(DetailActivity.TYPE,DetailActivity.TYPE_SPECIAL_TOPICS);
+                Intent intent = new Intent(mContext, DiscoveryDetailActivity.class);
+                intent.putExtra(DiscoveryDetailActivity.TYPE, DiscoveryDetailActivity.TYPE_SPECIAL_TOPICS);
                 startActivity(intent);
             }
         });
@@ -147,8 +147,8 @@ public class DiscoveryFragment extends BaseFragment {
         iv_360.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra(DetailActivity.TYPE,DetailActivity.TYPE_PANORAMA);
+                Intent intent = new Intent(mContext, DiscoveryDetailActivity.class);
+                intent.putExtra(DiscoveryDetailActivity.TYPE, DiscoveryDetailActivity.TYPE_PANORAMA);
                 startActivity(intent);
             }
         });
@@ -164,9 +164,9 @@ public class DiscoveryFragment extends BaseFragment {
             @Override
             public void onItemClick(FeedItem feedItem) {
                 Log.e("TAG",feedItem.getData().getTitle()+"id: "+feedItem.getData().getId());
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra(DetailActivity.TYPE,DetailActivity.TYPE_CATEGORY);
-                intent.putExtra(DetailActivity.FEED_ITEM,feedItem);
+                Intent intent = new Intent(mContext, DiscoveryDetailActivity.class);
+                intent.putExtra(DiscoveryDetailActivity.TYPE, DiscoveryDetailActivity.TYPE_CATEGORY);
+                intent.putExtra(DiscoveryDetailActivity.FEED_ITEM,feedItem);
                 startActivity(intent);
             }
         });

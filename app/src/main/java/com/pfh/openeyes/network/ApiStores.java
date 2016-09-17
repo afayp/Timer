@@ -41,7 +41,7 @@ public interface ApiStores {
     @GET("api/v3/tag/videos")
     Observable<Discovery> loadPanorama(@Query("tagId") String tagId,@Query("strategy") String strategy,@Query("num") String num);
 
-    //发现，360°全景
+    //发现，分类
     @GET("api/v3/videos")
     Observable<Discovery> loadCategory(@Query("categoryId") String tagId,@Query("strategy") String strategy,@Query("num") String num);
 
@@ -52,6 +52,10 @@ public interface ApiStores {
     //搜索关键词
     @GET("api/v3/queries/hot")
     Observable<List<String>> loadHotKeyword();
+
+    //作者页面详情页
+    @GET("api/v3/pgc/videos")
+    Observable<Discovery> loadAuthorDetail(@Query("pgcId") String pgcId,@Query("strategy") String strategy,@Query("num") String num);
 
 
 

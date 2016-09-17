@@ -20,19 +20,15 @@ public class FlowLayout extends ViewGroup {
 
     public FlowLayout(Context context) {
         this(context, null);
-        // TODO Auto-generated constructor stub  
     }
     public FlowLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        // TODO Auto-generated constructor stub  
     }
     public FlowLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        // TODO Auto-generated constructor stub  
     }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // TODO Auto-generated method stub  
 
         //父控件传进来的宽度和高度以及对应的测量模式  
         int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
@@ -88,7 +84,6 @@ public class FlowLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        // TODO Auto-generated method stub  
         mAllChildViews.clear();
         mLineHeight.clear();
         //获取当前ViewGroup的宽度  
@@ -170,8 +165,6 @@ public class FlowLayout extends ViewGroup {
      */
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
-        // TODO Auto-generated method stub  
-
         return new MarginLayoutParams(getContext(), attrs);
     }
 }  

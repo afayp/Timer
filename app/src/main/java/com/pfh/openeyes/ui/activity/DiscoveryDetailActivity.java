@@ -20,7 +20,7 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * Created by Administrator on 2016/9/10.
  */
-public class DetailActivity extends BaseActivity {
+public class DiscoveryDetailActivity extends BaseActivity {
 
 
     private FragmentManager manager;
@@ -29,9 +29,9 @@ public class DetailActivity extends BaseActivity {
     public static final String TYPE = "type";
     public static final String FEED_ITEM = "feedItem";
     public static final String TYPE_RANK_LIST = "rankList";//最受欢迎
-    public static final String TYPE_SPECIAL_TOPICS = "specialTopics";//最受欢迎
-    public static final String TYPE_PANORAMA = "panorama";//最受欢迎
-    public static final String TYPE_CATEGORY = "category";//最受欢迎
+    public static final String TYPE_SPECIAL_TOPICS = "specialTopics";//热门主题
+    public static final String TYPE_PANORAMA = "panorama";//360
+    public static final String TYPE_CATEGORY = "category";//分类
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

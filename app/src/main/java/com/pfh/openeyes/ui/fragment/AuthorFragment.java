@@ -1,5 +1,6 @@
 package com.pfh.openeyes.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import com.pfh.openeyes.R;
 import com.pfh.openeyes.model.Discovery;
 import com.pfh.openeyes.model.FeedItem;
+import com.pfh.openeyes.ui.activity.AuthorDetailActivity;
 import com.pfh.openeyes.ui.adapter.FeedAdapter;
 import com.pfh.openeyes.ui.base.BaseFragment;
 import com.pfh.openeyes.util.DividerItemDecoration;
@@ -66,6 +68,19 @@ public class AuthorFragment extends BaseFragment {
         recyclerview.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         feedAdapter = new FeedAdapter(feedItemList, mContext);
         recyclerview.setAdapter(feedAdapter);
+
+        feedAdapter.setOnItemClickListener(new FeedAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(View view, FeedItem feedItem, int position) {
+                if (feedItem.getData().getDataType().equals("BriefCard")){
+                    Intent intent = new Intent(mContext, AuthorDetailActivity.class);
+                    intent.putExtra(AuthorDetailActivity.PGCID,feedItem.getData().getId());
+                    startActivity(intent);
+                }else if (feedItem.getData().getDataType().equals("VideoCollection") ){
+
+                }
+            }
+        });
     }
 
     private void loadData() {
