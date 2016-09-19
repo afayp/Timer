@@ -53,6 +53,9 @@ public interface ApiStores {
     @GET("api/v3/queries/hot")
     Observable<List<String>> loadHotKeyword();
 
+    @GET("api/v1/search")
+    Observable<Discovery> searchKeyWord(@Query("query") String query);
+
     //作者页面详情页
     @GET("api/v3/pgc/videos")
     Observable<Discovery> loadAuthorDetail(@Query("pgcId") String pgcId,@Query("strategy") String strategy,@Query("num") String num);

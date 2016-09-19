@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this,SearchActivity.class));
-                overridePendingTransition(R.anim.top_in,R.anim.stay);
+//                overridePendingTransition(R.anim.top_in,R.anim.stay);
 //                startActivity(new Intent(MainActivity.this,SearchActivity.class),
 //                        ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this).toBundle());
             }

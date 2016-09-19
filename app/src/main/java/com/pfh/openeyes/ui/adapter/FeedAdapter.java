@@ -102,13 +102,11 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             case TYPE_Text_Header:
                 Log.e("TYPE","TYPE_Text_Header");
-
                 view = inflater.inflate(R.layout.item_feed_text_header,parent,false);
                 holder = new MyViewHolder_TextHeader(view);
                 break;
             case TYPE_LEFT_ALGIN_TEXT_HEADER:
                 Log.e("TYPE","TYPE_LEFT_ALGIN_TEXT_HEADER");
-
                 view = inflater.inflate(R.layout.item_feed_left_align_text_header,parent,false);
                 holder = new MyViewHolder_LeftAlignTextHeader(view);
                 break;
@@ -181,8 +179,10 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder_briefCard.briefCard.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Log.e("TAG","click 1");
                         if (onItemClickListener != null){
-                            //...
+                            Log.e("TAG","click 2");
+                            onItemClickListener.onItemClick(view,feedItem,position);
                         }
                     }
                 });

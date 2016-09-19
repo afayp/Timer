@@ -5,7 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +19,11 @@ import android.widget.TextView;
 
 import com.pfh.openeyes.R;
 import com.pfh.openeyes.event.ChangeDateEvent;
+import com.pfh.openeyes.model.Discovery;
+import com.pfh.openeyes.ui.adapter.FeedAdapter;
 import com.pfh.openeyes.ui.base.BaseActivity;
 import com.pfh.openeyes.util.LogUtil;
+import com.pfh.openeyes.widget.CustomRecyclerview;
 import com.pfh.openeyes.widget.FlowLayout;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -43,6 +49,7 @@ public class SearchActivity extends BaseActivity {
     @BindView(R.id.ll_content)
     LinearLayout ll_content;
     private List<TextView> textViewList;
+    private String currentKeyWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,7 @@ public class SearchActivity extends BaseActivity {
                 finish();
             }
         });
+
     }
 
     private void loadHotKeyword() {
@@ -70,7 +78,6 @@ public class SearchActivity extends BaseActivity {
                 .subscribe(new Subscriber<List<String>>() {
                     @Override
                     public void onCompleted() {
-                        Log.e("TAG","onCompleted");
                     }
 
                     @Override
@@ -79,19 +86,84 @@ public class SearchActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onNext(List<String> strings) {
+                    public void onNext(final List<String> strings) {
 
                         for (int i = 0; i < strings.size(); i++) {
                             TextView tv = new TextView(mContext);
                             tv.setText(strings.get(i));
                             tv.setTextColor(Color.WHITE);
                             tv.setBackgroundDrawable(getResources().getDrawable(R.drawable.keyword_bg));
+                            final int j = i;
+                            tv.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    searchKeyWord(strings.get(j));
+                                }
+                            });
                             textViewList.add(tv);
                         }
                         initDefalutView();
                     }
 
                 });
+    }
+
+    private void searchKeyWord(String s) {
+        Log.e("TAG","searchKeyWord");
+        currentKeyWord = s;
+        apiStores.searchKeyWord(s)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Discovery>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtil.e("SearchActivity network error:"+e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Discovery discovery) {
+                        handleSearchData(discovery);
+                    }
+                });
+
+    }
+
+    private void handleSearchData(Discovery discovery) {
+        if (discovery.getCount() == 0){
+            handleNoData();
+        }else {
+            handleHasData(discovery);
+        }
+    }
+
+    private void handleHasData(Discovery discovery) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.view_search_has_data, null);
+        TextView tv_search_result = (TextView) view.findViewById(R.id.tv_search_result);
+        CustomRecyclerview search_recyclerview = (CustomRecyclerview) view.findViewById(R.id.search_recyclerview);
+        tv_search_result.setText("-"+currentKeyWord+"搜索结果共"+discovery.getTotal()+"个-");
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        search_recyclerview.setLayoutManager(linearLayoutManager);
+
+        FeedAdapter feedAdapter = new FeedAdapter(discovery.getItemList(), mContext);
+        search_recyclerview.setAdapter(feedAdapter);
+
+        ll_content.removeAllViews();
+        ll_content.addView(view);
+
+    }
+
+
+    private void handleNoData() {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.view_search_no_data, null);
+        ll_content.removeAllViews();
+        ll_content.addView(view,new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     private void initDefalutView() {
@@ -139,7 +211,17 @@ public class SearchActivity extends BaseActivity {
             }
         });
         valueAnimator.start();
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER){
+            if (TextUtils.isEmpty(et_search.getText())){
+                searchKeyWord(et_search.getText().toString());
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN,priority = 1,sticky = true)
