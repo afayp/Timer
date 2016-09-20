@@ -3,6 +3,7 @@ package com.pfh.openeyes.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,8 @@ public class FeedFragment extends BaseFragment {
 
     private String nextPageUrl;
     private int count = 1;//一共有几天的货
-    private List<Integer> sizeEveryTime = new ArrayList<>();//每次加载对应的count，从1开始
+//    private List<Integer> sizeEveryTime = new ArrayList<>();//每次加载对应的count，从1开始
+    private HashMap<Integer,Integer> sizeEveryTime = new HashMap<>();
     private LinearLayoutManager layoutManager;
     private boolean isLoadingMore;
 //    private long currentDate;
@@ -175,7 +177,7 @@ public class FeedFragment extends BaseFragment {
                     @Override
                     public void onError(Throwable e) {
 //                        isLoadingMore = false;
-                        LogUtil.e("FeedFragment NetWork error: " + e.getMessage());
+                        LogUtil.e("FeedFragment NetWork error 2: " + e.getMessage());
 
                     }
 
@@ -203,12 +205,12 @@ public class FeedFragment extends BaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         isLoadingMore = false;
-                        LogUtil.e("FeedFragment NetWork error: " + e.getMessage());
+                        LogUtil.e("FeedFragment NetWork error 1: " + e.getMessage());
                     }
 
                     @Override
                     public void onNext(Feed feed) {
-//                        currentDate = feed.getIssueList().get(0).getDate();
+                        LogUtil.e("FeedFragment get ok  ");
                         handleFeed(feed);
                     }
                 });
@@ -223,7 +225,8 @@ public class FeedFragment extends BaseFragment {
 
         feedMap.put(count, feed);
         nextPageUrl = feed.getNextPageUrl();
-        sizeEveryTime.add(count, issueList.getCount());//第一条一般都是Banner或者TextHeader
+//        sizeEveryTime.put(count,issueList.getCount());//第一条一般都是Banner或者TextHeader
+//        sizeEveryTime.add(count, issueList.getCount());
         allFeedItemList.addAll(issueList.getItemList());//因为num为1，所以这里只有一个ItemList
         feedAdapter.refreshData(allFeedItemList);
     }
@@ -233,6 +236,7 @@ public class FeedFragment extends BaseFragment {
         int index1 = nextPageUrl.indexOf("date");
         int index2 = nextPageUrl.indexOf("&", index1);
         String date = nextPageUrl.substring(index1 + 5, index2);
+        Log.e("TAG",date);
         return date;
     }
 }

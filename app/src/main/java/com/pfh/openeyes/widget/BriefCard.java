@@ -48,7 +48,6 @@ public class BriefCard extends LinearLayout {
         tv_subTitle = (TextView) view.findViewById(R.id.tv_subTitle);
         tv_description = (TextView) view.findViewById(R.id.tv_description);
         iv_arrow = (ImageView) view.findViewById(R.id.iv_arrow);
-        setClickable(true);
     }
 
     public void setFeedItem(FeedItem feedItem){
