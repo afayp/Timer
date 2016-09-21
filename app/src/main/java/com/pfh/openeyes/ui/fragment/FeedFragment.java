@@ -225,8 +225,8 @@ public class FeedFragment extends BaseFragment {
 
         feedMap.put(count, feed);
         nextPageUrl = feed.getNextPageUrl();
-//        sizeEveryTime.put(count,issueList.getCount());//第一条一般都是Banner或者TextHeader
-//        sizeEveryTime.add(count, issueList.getCount());
+//        sizeEveryTime.put(count,IssueList.getCount());//第一条一般都是Banner或者TextHeader
+//        sizeEveryTime.add(count, IssueList.getCount());
         allFeedItemList.addAll(issueList.getItemList());//因为num为1，所以这里只有一个ItemList
         feedAdapter.refreshData(allFeedItemList);
     }

@@ -14,6 +14,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -51,10 +52,6 @@ public class NetWorkClient {
 
     private OkHttpClient initOkHttpClient(){
 
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
-//        builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
-
         Interceptor cacheInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -85,23 +82,14 @@ public class NetWorkClient {
         };
         File cacheFile = FileUtils.getCacheDir(MyApplication.getContext(),"httpCache");
 //        File cacheFile = FileUtils.getExternalCacheDirectory(MyApplication.getContext(), "");
-        if (cacheFile != null){
-            Cache cache = new Cache(cacheFile,1024*1024*50);
-            builder.cache(cache).addInterceptor(cacheInterceptor);
-        }
+        Cache cache = new Cache(cacheFile,1024*1024*50);
 
-//        // Log信息拦截器
-//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        //设置 Debug Log 模式
-
-        builder.connectTimeout(5000, TimeUnit.SECONDS);
-        //错误重连
-        builder.retryOnConnectionFailure(true);
-
-        OkHttpClient okHttpClient = builder.build();
-
-        return okHttpClient;
-
+        return new OkHttpClient.Builder()
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .addNetworkInterceptor(cacheInterceptor)
+                .cache(cache)
+                .connectTimeout(5000, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .build();
     }
 }
