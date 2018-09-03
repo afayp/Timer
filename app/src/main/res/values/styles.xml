@@ -1,25 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:listDivider">@drawable/recyclerview_divider_bg</item>
     </style>
-
-    <declare-styleable name="CustomToolbar">
-        <attr name="left_text" format="string"/>
-        <attr name="left_icon" format="reference"/>
-        <attr name="center_text" format="string"/>
-        <attr name="right_icon" format="reference"/>
-        <attr name="right_text" format="string"/>
-    </declare-styleable>
-
-    <declare-styleable name="CircleImageView">
-        <attr name="border_width" format="dimension" />
-        <attr name="border_color" format="color" />
-    </declare-styleable>
 
 </resources>
